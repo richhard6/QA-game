@@ -4,8 +4,6 @@ let questionCounter = 0;
 
 let score = 0;
 
-let allQuestions = [];
-
 const questionDOM = document.querySelector('.question');
 
 const answersDOM = document.querySelector('.answers-container');
@@ -32,6 +30,8 @@ async function renderQuestion() {
     const button = document.createElement('button');
 
     button.textContent = currentQuestion.answers[i];
+
+    button.classList.add('btn');
 
     console.log(button);
 
