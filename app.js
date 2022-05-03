@@ -8,9 +8,26 @@ let questionCounter = 0;
 let score = 0;
 //Cada respuesta correcta son 10 pts
 
+let answered = false;
+
 const questionDOM = document.querySelector('.question');
 
 const answersDOM = document.querySelector('.answers-container');
+
+const pointsDOM = document.querySelector('.points');
+
+const nextButton = document.querySelector('.next-button');
+
+const nextQuestion = () => {
+  questionCounter++;
+  nextButton.classList.add('hide');
+
+  answered = false;
+
+  renderQuestion();
+};
+
+nextButton.addEventListener('click', nextQuestion);
 
 //Obtiene los datos
 async function getData() {
@@ -39,7 +56,7 @@ async function renderQuestion() {
 
     button.textContent = currentQuestion.answers[i];
 
-    console.log(button);
+    button.classList.add('btn');
 
     answersDOM.append(button);
 
@@ -52,14 +69,20 @@ async function renderQuestion() {
 //Chequea que la respuesta sea correcta
 function checkAnswer(clicked, correct) {
   console.log(clicked, correct);
-  if (clicked === correct) {
+
+  if (clicked === correct && answered === false) {
     score += 10;
   }
   console.log(score);
 
-  questionCounter++;
+  answered = true;
+  //imprimimos la puntuación
+  pointsDOM.textContent = `Score: ${score}`;
 
-  renderQuestion();
+  //Escondemos el boton de next
+  nextButton.classList.remove('hide');
+
+  console.log(nextButton);
 }
 
 renderQuestion();

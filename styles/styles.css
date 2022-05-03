@@ -25,3 +25,11 @@ h2 {
   align-items: center;
   justify-content: center;
 }
+
+.hide {
+  display: none;
+}
+
+.next-button {
+  border: 1px solid green;
+}
