@@ -9,8 +9,13 @@ let score = 0;
 //Cada respuesta correcta son 10 pts
 
 let answered = false;
+//falso = no ha contestado, true contestado.
+
+let totalLength = 0;
 
 const questionDOM = document.querySelector('.question');
+
+const sectionDOM = document.querySelector('section');
 
 const answersDOM = document.querySelector('.answers-container');
 
@@ -18,6 +23,7 @@ const pointsDOM = document.querySelector('.points');
 
 const nextButton = document.querySelector('.next-button');
 
+//Funcion para pasar a la siguiente pregunta
 const nextQuestion = () => {
   questionCounter++;
   nextButton.classList.add('hide');
@@ -34,35 +40,52 @@ async function getData() {
   const response = await fetch('./data.json');
   const data = await response.json();
 
+  totalLength = data.length;
+
   return data;
 }
+
+//borramos el contenido de la pregunta y respuesta
+const clearScreen = () => {
+  questionDOM.textContent = '';
+
+  answersDOM.innerHTML = '';
+};
 
 //Renderiza pregunta
 async function renderQuestion() {
   const data = await getData();
 
-  const currentQuestion = data[questionCounter];
+  if (data.length > questionCounter) {
+    const currentQuestion = data[questionCounter];
+    console.log(data[questionCounter]);
 
-  console.log(data[questionCounter]);
+    clearScreen();
 
-  questionDOM.textContent = currentQuestion.question;
+    questionDOM.textContent = currentQuestion.question;
 
-  //Vaciamos los botones
-  answersDOM.innerHTML = '';
+    //Recorremos el arrray de preguntas
+    for (let i = 0; i < currentQuestion.answers.length; i++) {
+      const button = document.createElement('button');
 
-  //Recorremos el arrray de preguntas
-  for (let i = 0; i < currentQuestion.answers.length; i++) {
-    const button = document.createElement('button');
+      button.textContent = currentQuestion.answers[i];
 
-    button.textContent = currentQuestion.answers[i];
+      button.classList.add('btn');
 
-    button.classList.add('btn');
+      answersDOM.append(button);
 
-    answersDOM.append(button);
+      button.addEventListener('click', (e) =>
+        checkAnswer(e.target.textContent, currentQuestion.correct)
+      );
+    }
+  } else {
+    sectionDOM.innerHTML = '';
 
-    button.addEventListener('click', (e) =>
-      checkAnswer(e.target.textContent, currentQuestion.correct)
-    );
+    const finalScore = document.createElement('h1');
+
+    finalScore.innerText = `Your final score is ${score}`;
+
+    sectionDOM.append(finalScore);
   }
 }
 
@@ -84,5 +107,7 @@ function checkAnswer(clicked, correct) {
 
   console.log(nextButton);
 }
+
+/* if (questionCounter === ) clearScreen(); */
 
 renderQuestion();
