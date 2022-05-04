@@ -56,15 +56,17 @@ const clearScreen = () => {
 async function renderQuestion() {
   const data = await getData();
 
+  //Si el largo del JSON es superior al contador de preguntas...
   if (data.length > questionCounter) {
+    //Cogemos los datos del JSON
     const currentQuestion = data[questionCounter];
     console.log(data[questionCounter]);
 
+    //Limpiamos pantalla y mostramos la pregunta
     clearScreen();
-
     questionDOM.textContent = currentQuestion.question;
 
-    //Recorremos el arrray de preguntas
+    //Recorremos el array de respuestas
     for (let i = 0; i < currentQuestion.answers.length; i++) {
       const button = document.createElement('button');
 
@@ -79,6 +81,7 @@ async function renderQuestion() {
       );
     }
   } else {
+    //En caso contrario, borrar odo y mostrar la pantalla final
     sectionDOM.innerHTML = '';
 
     const finalScore = document.createElement('h1');
@@ -93,6 +96,7 @@ async function renderQuestion() {
 function checkAnswer(clicked, correct) {
   console.log(clicked, correct);
 
+  //Si aun no se ha clickeado, agregar 10pts
   if (clicked === correct && answered === false) {
     score += 10;
   }
