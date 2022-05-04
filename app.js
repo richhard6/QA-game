@@ -24,10 +24,17 @@ const scoreDOM = document.querySelector('.score');
 
 const nextButton = document.querySelector('.next-button');
 
+const questionNumberDOM = document.querySelector('.question-number');
+
+const QAContainerDOM = document.querySelector('.question-answer-container');
+
 //  Funcion para pasar a la siguiente pregunta
 const nextQuestion = () => {
   questionCounter++;
   nextButton.classList.add('hide');
+
+  QAContainerDOM.classList.remove('question-answer-container');
+  nextButton.classList.remove('next-button-show');
 
   answered = false;
   renderQuestion();
@@ -55,6 +62,11 @@ const clearScreen = () => {
 //  Renderiza pregunta
 async function renderQuestion() {
   const data = await getData();
+
+  QAContainerDOM.classList.add('question-answer-container');
+  questionNumberDOM.textContent = `Question ${questionCounter + 1} of  ${
+    data.length
+  }`;
 
   //  Si el largo del JSON es superior al contador de preguntas...
   if (data.length > questionCounter) {
@@ -100,13 +112,13 @@ function checkAnswer(clicked, correct) {
   if (clicked.target.textContent === correct && answered === false) {
     score += 10;
     clicked.target.classList.add('correct');
-
-  }else if (answered === false) {
+  } else if (answered === false) {
     clicked.target.classList.add('wrong');
-
   }
-  
+
   console.log(score);
+
+  nextButton.classList.add('next-button-show');
 
   answered = true;
   //  Imprimimos la puntuación
