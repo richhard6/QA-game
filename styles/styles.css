@@ -112,10 +112,25 @@ h2 {
 
 /* ------------------------------------------------------------- */
 
-.final-score {
+.final-score,
+.score-text {
   color: white;
-  font-size: 5rem;
+
   animation: entrance 0.5s ease-in-out;
+}
+
+.final-score {
+  font-size: 5rem;
+  color: yellow;
+
+  margin-top: 2.3rem;
+  -webkit-animation: text-pop-up-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    both;
+  animation: text-pop-up-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.score-text {
+  font-size: 3rem;
 }
 
 .question-number {

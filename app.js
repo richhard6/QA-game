@@ -96,11 +96,17 @@ async function renderQuestion() {
     //  En caso contrario, borrar odo y mostrar la pantalla final
     sectionDOM.innerHTML = '';
 
-    const finalScore = document.createElement('h1');
+    const finalScore = document.createElement('h2');
 
-    finalScore.innerText = `Your final score is ${score}`;
-    finalScore.classList.add('final-score');
+    const scoreShow = document.createElement('h1');
+
+    scoreShow.innerText = score;
+
+    finalScore.innerText = 'Your final score is';
+    scoreShow.classList.add('final-score');
+    finalScore.classList.add('score-text');
     sectionDOM.append(finalScore);
+    sectionDOM.append(scoreShow);
   }
 }
 
