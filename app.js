@@ -30,7 +30,6 @@ const nextQuestion = () => {
   nextButton.classList.add('hide');
 
   answered = false;
-
   renderQuestion();
 };
 
@@ -88,7 +87,7 @@ async function renderQuestion() {
     const finalScore = document.createElement('h1');
 
     finalScore.innerText = `Your final score is ${score}`;
-
+    finalScore.classList.add('final-score');
     sectionDOM.append(finalScore);
   }
 }
