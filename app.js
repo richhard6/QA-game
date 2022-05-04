@@ -6,10 +6,11 @@ let questionCounter = 0;
 //  corresponde a esta variable
 
 let score = 0;
-//Cada respuesta correcta son 10 pts
+//  Aqui se almacena la puntuacion
+//  Cada respuesta correcta son 10 pts
 
 let answered = false;
-//falso = no ha contestado, true contestado.
+//  falso = no ha contestado, true contestado.
 
 let totalLength = 0;
 
@@ -19,11 +20,11 @@ const sectionDOM = document.querySelector('section');
 
 const answersDOM = document.querySelector('.answers-container');
 
-const pointsDOM = document.querySelector('.points');
+const scoreDOM = document.querySelector('.score');
 
 const nextButton = document.querySelector('.next-button');
 
-//Funcion para pasar a la siguiente pregunta
+//  Funcion para pasar a la siguiente pregunta
 const nextQuestion = () => {
   questionCounter++;
   nextButton.classList.add('hide');
@@ -35,7 +36,7 @@ const nextQuestion = () => {
 
 nextButton.addEventListener('click', nextQuestion);
 
-//Obtiene los datos
+//  Obtiene los datos
 async function getData() {
   const response = await fetch('./data.json');
   const data = await response.json();
@@ -45,28 +46,28 @@ async function getData() {
   return data;
 }
 
-//borramos el contenido de la pregunta y respuesta
+//  Borramos el contenido de la pregunta y respuesta
 const clearScreen = () => {
   questionDOM.textContent = '';
 
   answersDOM.innerHTML = '';
 };
 
-//Renderiza pregunta
+//  Renderiza pregunta
 async function renderQuestion() {
   const data = await getData();
 
-  //Si el largo del JSON es superior al contador de preguntas...
+  //  Si el largo del JSON es superior al contador de preguntas...
   if (data.length > questionCounter) {
-    //Cogemos los datos del JSON
+    //  Cogemos los datos del JSON
     const currentQuestion = data[questionCounter];
     console.log(data[questionCounter]);
 
-    //Limpiamos pantalla y mostramos la pregunta
+    //  Limpiamos pantalla y mostramos la pregunta
     clearScreen();
     questionDOM.textContent = currentQuestion.question;
 
-    //Recorremos el array de respuestas
+    //  Recorremos el array de respuestas
     for (let i = 0; i < currentQuestion.answers.length; i++) {
       const button = document.createElement('button');
 
@@ -77,11 +78,11 @@ async function renderQuestion() {
       answersDOM.append(button);
 
       button.addEventListener('click', (e) =>
-        checkAnswer(e.target.textContent, currentQuestion.correct)
+        checkAnswer(e, currentQuestion.correct)
       );
     }
   } else {
-    //En caso contrario, borrar odo y mostrar la pantalla final
+    //  En caso contrario, borrar odo y mostrar la pantalla final
     sectionDOM.innerHTML = '';
 
     const finalScore = document.createElement('h1');
@@ -92,19 +93,25 @@ async function renderQuestion() {
   }
 }
 
-//Chequea que la respuesta sea correcta
+//  Chequea que la respuesta sea correcta
 function checkAnswer(clicked, correct) {
   console.log(clicked, correct);
 
-  //Si aun no se ha clickeado, agregar 10pts
-  if (clicked === correct && answered === false) {
+  //  Si aun no se ha clickeado, agregar 10pts y dar feedback
+  if (clicked.target.textContent === correct && answered === false) {
     score += 10;
+    clicked.target.classList.add('correct');
+
+  }else if (answered === false) {
+    clicked.target.classList.add('wrong');
+
   }
+  
   console.log(score);
 
   answered = true;
-  //imprimimos la puntuación
-  pointsDOM.textContent = `Score: ${score}`;
+  //  Imprimimos la puntuación
+  scoreDOM.textContent = `Score: ${score}`;
 
   //Escondemos el boton de next
   nextButton.classList.remove('hide');
