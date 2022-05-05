@@ -12,7 +12,7 @@ let score = 0;
 let answered = false;
 //  falso = no ha contestado, true contestado.
 
-let totalLength = 0;
+let totalTime = 20;
 
 const questionDOM = document.querySelector('.question');
 
@@ -26,6 +26,8 @@ const nextButton = document.querySelector('.next-button');
 
 const questionNumberDOM = document.querySelector('.question-number');
 
+const timerBar = document.querySelector('#timer');
+
 const QAContainerDOM = document.querySelector('.question-answer-container');
 
 //  Funcion para pasar a la siguiente pregunta
@@ -37,7 +39,26 @@ const nextQuestion = () => {
   nextButton.classList.remove('next-button-show');
 
   answered = false;
+
   renderQuestion();
+};
+
+//funcion de temporizador
+const questionTimer = () => {
+  totalTime = 30;
+  let interval = setInterval(() => {
+    totalTime--;
+
+    timerBar.value--;
+    if (totalTime === 0) {
+      clearInterval(interval);
+      answered = true;
+      nextButton.classList.remove('hide');
+    } else if (answered === true) {
+      clearInterval(interval);
+    }
+    console.log(totalTime);
+  }, 1000);
 };
 
 nextButton.addEventListener('click', nextQuestion);
@@ -46,8 +67,6 @@ nextButton.addEventListener('click', nextQuestion);
 async function getData() {
   const response = await fetch('./data.json');
   const data = await response.json();
-
-  totalLength = data.length;
 
   return data;
 }
@@ -62,6 +81,8 @@ const clearScreen = () => {
 //  Renderiza pregunta
 async function renderQuestion() {
   const data = await getData();
+
+  questionTimer();
 
   QAContainerDOM.classList.add('question-answer-container');
   questionNumberDOM.textContent = `Question ${questionCounter + 1} of  ${
@@ -116,7 +137,8 @@ function checkAnswer(clicked, correct) {
 
   //  Si aun no se ha clickeado, agregar 10pts y dar feedback
   if (clicked.target.textContent === correct && answered === false) {
-    score += 10;
+    score += 10 * totalTime;
+
     clicked.target.classList.add('correct');
   } else if (answered === false) {
     clicked.target.classList.add('wrong');
