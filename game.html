@@ -7,22 +7,30 @@
     <title>Q&A Game</title>
     <link rel="stylesheet" href="./styles/styles.css" />
   </head>
+
   <body>
     <main>
       <section>
-        <h3 class="score">Score: 0</h3>
 
-        <p class="question-number"></p>
+        <div id="top">
+          <h3 class="score">Score: 0</h3>
 
-        <progress id="timer" value="30" max="30">32%</progress>
+          <p class="question-number"></p>
+        </div>
+        
+        <progress id="timer" value="30" max="30"></progress>
 
         <div class="question-answer-container">
-          <h2 class="question"></h2>
 
+          <h2 class="question"></h2>
           <div class="answers-container"></div>
+
         </div>
 
-        <button class="next-button hide">Next</button>
+        <div class="next-button-container">
+          <button class="next-button hide">Next</button>
+        </div>
+
       </section>
     </main>
 

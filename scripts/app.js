@@ -1,6 +1,8 @@
 'use strict';
 
 let timerMode = localStorage.getItem('timerMode') === 'true' ? true : false;
+//  Toma la variable del LocalStorage para
+//  reconocer el modo de juego
 
 let questionCounter = 0;
 //  Cuenta las preguntas que se han mostrado
@@ -15,6 +17,9 @@ let answered = false;
 //  falso = no ha contestado, true contestado.
 
 let totalTime = 30;
+//  Tiempo total para el numero 
+
+// --------------------------- QuerySelector ------------------------------------//
 
 const questionDOM = document.querySelector('.question');
 
@@ -32,8 +37,13 @@ const timerBar = document.querySelector('#timer');
 
 const QAContainerDOM = document.querySelector('.question-answer-container');
 
+// ----------------------------------------------------------------------//
+
+
 //  Funcion para pasar a la siguiente pregunta
 const nextQuestion = () => {
+
+  // Agregamos +1 alcontador de pregunta y ocultamos el boton "Next"
   questionCounter++;
   nextButton.classList.add('hide');
 
@@ -41,22 +51,29 @@ const nextQuestion = () => {
   nextButton.classList.remove('next-button-show');
 
   answered = false;
-
   renderQuestion();
 };
 
-//funcion de temporizador
+//  Temporizador
 const questionTimer = () => {
-  if (timerMode === true) {
-    totalTime = 30;
-    let interval = setInterval(() => {
-      totalTime--;
 
+  //  Solo se activa si el modo temporizador esta activado
+  if (timerMode === true) {
+
+    //  Cada vez que se inicia el temporizador, se reinician los valroes
+    totalTime = 30;
+    timerBar.value = 30;
+
+    let interval = setInterval(() => {
+
+      totalTime--;
       timerBar.value--;
+
       if (totalTime === 0) {
         clearInterval(interval);
         answered = true;
         nextButton.classList.remove('hide');
+
       } else if (answered === true) {
         clearInterval(interval);
       }
@@ -67,7 +84,7 @@ const questionTimer = () => {
 
 nextButton.addEventListener('click', nextQuestion);
 
-//  Obtiene los datos
+//  Obtiene los datos del JSON
 async function getData() {
   const response = await fetch('./data.json');
   const data = await response.json();
@@ -75,17 +92,16 @@ async function getData() {
   return data;
 }
 
-//  Borramos el contenido de la pregunta y respuesta
+//  Borra el contenido de la pregunta y respuesta
 const clearScreen = () => {
   questionDOM.textContent = '';
-
   answersDOM.innerHTML = '';
 };
 
 //  Renderiza pregunta
 async function renderQuestion() {
-  const data = await getData();
 
+  const data = await getData();
   questionTimer();
 
   if (timerMode === false) {
@@ -126,7 +142,6 @@ async function renderQuestion() {
     sectionDOM.innerHTML = '';
 
     const finalScore = document.createElement('h2');
-
     const scoreShow = document.createElement('h1');
 
     scoreShow.innerText = score;
@@ -134,6 +149,7 @@ async function renderQuestion() {
     finalScore.innerText = 'Your final score is';
     scoreShow.classList.add('final-score');
     finalScore.classList.add('score-text');
+
     sectionDOM.append(finalScore);
     sectionDOM.append(scoreShow);
   }
@@ -144,33 +160,32 @@ function checkAnswer(clicked, correct) {
   console.log(clicked, correct);
 
   //  Si aun no se ha clickeado, agregar 10pts y dar feedback
+  //  El calculo del puntaje depende del modo seleccionado
   if (clicked.target.textContent === correct && answered === false) {
     if (timerMode) {
-      score += 10 * totalTime;
-
+      score += 5 * totalTime;
       clicked.target.classList.add('correct');
+
     } else {
+
       score += 10;
       clicked.target.classList.add('correct');
     }
+
   } else if (answered === false) {
     clicked.target.classList.add('wrong');
   }
 
   console.log(score);
-
   nextButton.classList.add('next-button-show');
-
   answered = true;
+
   //  Imprimimos la puntuación
   scoreDOM.textContent = `Score: ${score}`;
-
-  //Escondemos el boton de next
+  //  Escondemos el boton de next
   nextButton.classList.remove('hide');
 
   console.log(nextButton);
 }
-
-/* if (questionCounter === ) clearScreen(); */
 
 renderQuestion();

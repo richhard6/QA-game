@@ -8,22 +8,38 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.hide {
+  visibility: hidden;
+}
+
+/* ----------------------- Header ------------------------------------- */
+
+#top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0vw  5vw;
+
+  background-color: black;
+  color: white;
+  height: 5vh;
+}
+
+#timer {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+/* ----------------------- Main ------------------------------------- */
+
+
 main {
   height: 100vh;
-  background: #b8a9ce;
-  background: -moz-linear-gradient(top, #b8a9ce 0%, #3d40a4 50%, #6d67c5 100%);
-  background: -webkit-linear-gradient(
-    top,
-    #b8a9ce 0%,
-    #3d40a4 50%,
-    #6d67c5 100%
-  );
-  background: linear-gradient(to bottom, #b8a9ce 0%, #3d40a4 50%, #6d67c5 100%);
+  background-color: #2e182f;
 }
+
 section {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -32,37 +48,33 @@ h2 {
   text-align: center;
 }
 
-.answers-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hide {
-  visibility: hidden;
-}
-
-.score {
-  margin-bottom: 8rem;
-  color: white;
-}
-
 .question {
   font-size: 2.2rem;
   color: white;
+  width: 50vw;
 }
 
 .question-answer-container {
   animation: slideIn 1s ease 0s 1 normal forwards;
+  height: 70vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ------------------------ Botones respuestas -------------- */
 
 .answers-container {
   display: flex;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  display: flex;
+  width: 50%;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
+  margin-top: 2.5rem;
 }
 
 .answers-container > * {
@@ -72,6 +84,9 @@ h2 {
 
 .btn {
   border: none;
+  height: 10vh;
+  width: 20vw;
+
   padding: 0.6rem;
   cursor: pointer;
   border-radius: 7px;
@@ -86,15 +101,24 @@ h2 {
 
 .correct {
   background-color: green;
+  color: white;
   -webkit-animation: blink-1 0.6s both;
   animation: blink-1 0.6s both;
 }
 
 .wrong {
   background-color: red;
+  color: white;
   -webkit-animation: shake-horizontal 0.8s
     cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
   animation: shake-horizontal 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+}
+
+/* ------------------------ Boton 'Next' -------------- */
+
+.next-button-container {
+  display: flex;
+  justify-content: center;
 }
 
 .next-button {
@@ -110,7 +134,7 @@ h2 {
   animation: nextButtonShow 0.3s ease-in;
 }
 
-/* ------------------------------------------------------------- */
+/* -------------------------- Game Over ----------------------------------- */
 
 .final-score,
 .score-text {
@@ -125,7 +149,7 @@ h2 {
 
   margin-top: 2.3rem;
   -webkit-animation: text-pop-up-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
-    both;
+  both;
   animation: text-pop-up-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
@@ -133,27 +157,24 @@ h2 {
   font-size: 3rem;
 }
 
-.question-number {
-  margin-bottom: 4rem;
-  color: white;
-}
-
-#timer {
-  margin-bottom: 2rem;
-}
-
-@media screen and (max-width: 446px) {
+@media screen and (max-width: 700px) {
   .answers-container {
     flex-direction: column;
   }
 
+  .question {
+    font-size: 2.2rem;
+    color: white;
+    width: 70vw;
+    margin-top: 2rem;
+  }
+
   .answers-container > * {
-    width: 70%;
     margin-bottom: 0.7rem;
   }
 
-  .score {
-    margin-bottom: 3rem;
+  .btn {
+    width: 100%;
   }
 
   section {
@@ -161,6 +182,6 @@ h2 {
   }
 
   .next-button {
-    margin-top: 1.3rem;
+    margin-top: 2.5rem;
   }
 }
