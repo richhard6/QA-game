@@ -1,5 +1,7 @@
 'use strict';
 
+let timerMode = localStorage.getItem('timerMode') === 'true' ? true : false;
+
 let questionCounter = 0;
 //  Cuenta las preguntas que se han mostrado
 //  Cuando entra al JSON, muestra el pregunta que
@@ -12,7 +14,7 @@ let score = 0;
 let answered = false;
 //  falso = no ha contestado, true contestado.
 
-let totalTime = 20;
+let totalTime = 30;
 
 const questionDOM = document.querySelector('.question');
 
@@ -45,20 +47,22 @@ const nextQuestion = () => {
 
 //funcion de temporizador
 const questionTimer = () => {
-  totalTime = 30;
-  let interval = setInterval(() => {
-    totalTime--;
+  if (timerMode === true) {
+    totalTime = 30;
+    let interval = setInterval(() => {
+      totalTime--;
 
-    timerBar.value--;
-    if (totalTime === 0) {
-      clearInterval(interval);
-      answered = true;
-      nextButton.classList.remove('hide');
-    } else if (answered === true) {
-      clearInterval(interval);
-    }
-    console.log(totalTime);
-  }, 1000);
+      timerBar.value--;
+      if (totalTime === 0) {
+        clearInterval(interval);
+        answered = true;
+        nextButton.classList.remove('hide');
+      } else if (answered === true) {
+        clearInterval(interval);
+      }
+      console.log(totalTime);
+    }, 1000);
+  }
 };
 
 nextButton.addEventListener('click', nextQuestion);
@@ -83,6 +87,10 @@ async function renderQuestion() {
   const data = await getData();
 
   questionTimer();
+
+  if (timerMode === false) {
+    timerBar.classList.add('hide');
+  }
 
   QAContainerDOM.classList.add('question-answer-container');
   questionNumberDOM.textContent = `Question ${questionCounter + 1} of  ${
@@ -137,9 +145,14 @@ function checkAnswer(clicked, correct) {
 
   //  Si aun no se ha clickeado, agregar 10pts y dar feedback
   if (clicked.target.textContent === correct && answered === false) {
-    score += 10 * totalTime;
+    if (timerMode) {
+      score += 10 * totalTime;
 
-    clicked.target.classList.add('correct');
+      clicked.target.classList.add('correct');
+    } else {
+      score += 10;
+      clicked.target.classList.add('correct');
+    }
   } else if (answered === false) {
     clicked.target.classList.add('wrong');
   }

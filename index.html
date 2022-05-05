@@ -11,13 +11,24 @@
     <main>
       <h1>Q&A Game</h1>
 
-      <h2>Welcome!</h2>
+      <h2>Welcome!! select your game mode.</h2>
 
-      <button><a href="game.html">Start Game</a></button>
-
-      <button class="prueba">Prueba</button>
+      <div class="game-mode-container">
+        <a href="game.html">
+          <div class="image-container">
+            <img src="./img/quiz.png" alt="game mode" class="normalMode" />
+            <h3>Normal</h3>
+          </div>
+        </a>
+        <a href="game.html">
+          <div class="image-container">
+            <img src="./img/timer.png" alt="game mode" class="timerMode" />
+            <h3>Timer</h3>
+          </div>
+        </a>
+      </div>
     </main>
 
-    <script src="gameMode.js"></script>
+    <script src="./scripts/gameMode.js"></script>
   </body>
 </html>

@@ -44,3 +44,33 @@ button {
   border-radius: 7px;
   font-size: 2rem;
 }
+
+.game-mode-container {
+  display: flex;
+  gap: 5rem;
+}
+
+.image-container {
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 1s ease;
+}
+
+.image-container:hover {
+  transform: scale(1.2);
+}
+
+img {
+  max-width: 100%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 300px) {
+  .game-mode-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+}
