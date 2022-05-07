@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0vw  5vw;
+  padding: 0vw 5vw;
 
   background-color: black;
   color: white;
@@ -31,7 +31,6 @@
 }
 
 /* ----------------------- Main ------------------------------------- */
-
 
 main {
   height: 100vh;
@@ -123,7 +122,7 @@ h2 {
 
 .next-button {
   border: none;
-  margin-top: 5rem;
+  margin-top: 2rem;
   padding: 0.5rem 0.9rem;
   cursor: pointer;
   border-radius: 7px;
@@ -149,7 +148,7 @@ h2 {
 
   margin-top: 2.3rem;
   -webkit-animation: text-pop-up-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
-  both;
+    both;
   animation: text-pop-up-top 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
@@ -175,10 +174,6 @@ h2 {
 
   .btn {
     width: 100%;
-  }
-
-  section {
-    padding: 0.5rem;
   }
 
   .next-button {

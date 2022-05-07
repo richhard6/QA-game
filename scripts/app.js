@@ -17,7 +17,7 @@ let answered = false;
 //  falso = no ha contestado, true contestado.
 
 let totalTime = 30;
-//  Tiempo total para el numero 
+//  Tiempo total para el numero
 
 // --------------------------- QuerySelector ------------------------------------//
 
@@ -39,10 +39,8 @@ const QAContainerDOM = document.querySelector('.question-answer-container');
 
 // ----------------------------------------------------------------------//
 
-
 //  Funcion para pasar a la siguiente pregunta
 const nextQuestion = () => {
-
   // Agregamos +1 alcontador de pregunta y ocultamos el boton "Next"
   questionCounter++;
   nextButton.classList.add('hide');
@@ -56,16 +54,13 @@ const nextQuestion = () => {
 
 //  Temporizador
 const questionTimer = () => {
-
   //  Solo se activa si el modo temporizador esta activado
   if (timerMode === true) {
-
     //  Cada vez que se inicia el temporizador, se reinician los valroes
     totalTime = 30;
     timerBar.value = 30;
 
     let interval = setInterval(() => {
-
       totalTime--;
       timerBar.value--;
 
@@ -73,7 +68,6 @@ const questionTimer = () => {
         clearInterval(interval);
         answered = true;
         nextButton.classList.remove('hide');
-
       } else if (answered === true) {
         clearInterval(interval);
       }
@@ -100,7 +94,6 @@ const clearScreen = () => {
 
 //  Renderiza pregunta
 async function renderQuestion() {
-
   const data = await getData();
   questionTimer();
 
@@ -141,6 +134,9 @@ async function renderQuestion() {
     //  En caso contrario, borrar odo y mostrar la pantalla final
     sectionDOM.innerHTML = '';
 
+    sectionDOM.style.display = 'flex';
+    sectionDOM.style.flexDirection = 'column';
+
     const finalScore = document.createElement('h2');
     const scoreShow = document.createElement('h1');
 
@@ -165,13 +161,10 @@ function checkAnswer(clicked, correct) {
     if (timerMode) {
       score += 5 * totalTime;
       clicked.target.classList.add('correct');
-
     } else {
-
       score += 10;
       clicked.target.classList.add('correct');
     }
-
   } else if (answered === false) {
     clicked.target.classList.add('wrong');
   }
