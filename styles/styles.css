@@ -60,13 +60,16 @@ h2 {
 }
 
 .question-answer-container {
-  animation: slideIn 1s ease 0s 1 normal forwards;
   height: 70vh;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.QA-animation {
+  animation: slideIn 1s ease 0s 1 normal forwards;
 }
 
 /* ------------------------ Botones respuestas -------------- */

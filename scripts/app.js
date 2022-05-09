@@ -47,8 +47,7 @@ const nextQuestion = () => {
   questionCounter++;
   nextButton.classList.add('hide');
 
-  //QAContainer.classList.remove('question-answer-container');
-  QAContainer.style.animation = 'none';
+  QAContainer.classList.remove('QA-animation');
 
   nextButton.classList.remove('next-button-show');
 
@@ -119,10 +118,7 @@ async function renderQuestion() {
     timerBar.classList.add('hide');
   }
 
-  //QAContainer.classList.add('question-answer-container');
-
-  QAContainer.style.animation = 'slideIn 1s ease 0s 1 normal forwards';
-
+  QAContainer.classList.add('QA-animation');
   questionNumber.textContent = `Question ${questionCounter + 1} of  ${
     data.length
   }`;
@@ -169,6 +165,7 @@ async function renderQuestion() {
 
     restartButton.innerText = 'Restart';
 
+    //se añade el evento click con la funcion restartGame al boton previamente creado
     restartButton.addEventListener('click', restartGame);
 
     scoreShow.innerText = score;
