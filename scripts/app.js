@@ -47,7 +47,9 @@ const nextQuestion = () => {
   questionCounter++;
   nextButton.classList.add('hide');
 
-  QAContainer.classList.remove('question-answer-container');
+  //QAContainer.classList.remove('question-answer-container');
+  QAContainer.style.animation = 'none';
+
   nextButton.classList.remove('next-button-show');
 
   answered = false;
@@ -117,7 +119,10 @@ async function renderQuestion() {
     timerBar.classList.add('hide');
   }
 
-  QAContainer.classList.add('question-answer-container');
+  //QAContainer.classList.add('question-answer-container');
+
+  QAContainer.style.animation = 'slideIn 1s ease 0s 1 normal forwards';
+
   questionNumber.textContent = `Question ${questionCounter + 1} of  ${
     data.length
   }`;
