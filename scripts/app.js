@@ -17,13 +17,15 @@ let answered = false;
 //  falso = no ha contestado, true contestado.
 
 let totalTime = 30;
-//  Tiempo total para el numero
+//  Tiempo total para cada pregunta
 
 // --------------------------- QuerySelector ------------------------------------//
 
 const question = document.querySelector('.question');
 
 const main = document.querySelector('main');
+
+const header = document.querySelector('header');
 
 const answersContainer = document.querySelector('.answers-container');
 
@@ -52,6 +54,22 @@ const nextQuestion = () => {
   renderQuestion();
 };
 
+const restartGame = () => {
+  score = 0;
+  questionCounter = 0;
+  answered = false;
+  QAContainer.style.display = 'flex';
+  timerBar.style.display = 'block';
+  header.style.display = 'flex';
+  main.classList.remove('flex-column');
+
+  document.querySelector('.final-score').remove();
+  document.querySelector('.score-text').remove();
+  document.querySelector('.restart-btn').remove();
+
+  renderQuestion();
+};
+
 //  Temporizador
 const questionTimer = () => {
   //  Solo se activa si el modo temporizador esta activado
@@ -71,7 +89,6 @@ const questionTimer = () => {
       } else if (answered === true) {
         clearInterval(interval);
       }
-      console.log(totalTime);
     }, 1000);
   }
 };
@@ -95,7 +112,6 @@ const clearScreen = () => {
 //  Renderiza pregunta
 async function renderQuestion() {
   const data = await getData();
-  questionTimer();
 
   if (timerMode === false) {
     timerBar.classList.add('hide');
@@ -108,9 +124,11 @@ async function renderQuestion() {
 
   //  Si el largo del JSON es superior al contador de preguntas...
   if (data.length > questionCounter) {
+    questionTimer();
+
     //  Cogemos los datos del JSON
+
     const currentQuestion = data[questionCounter];
-    console.log(data[questionCounter]);
 
     //  Limpiamos pantalla y mostramos la pregunta
     clearScreen();
@@ -131,14 +149,22 @@ async function renderQuestion() {
       );
     }
   } else {
-    //  En caso contrario, borrar odo y mostrar la pantalla final
-    main.innerHTML = '';
-
-    main.style.display = 'flex';
-    main.style.flexDirection = 'column';
+    //  En caso contrario, borrar todo y mostrar la pantalla final
+    QAContainer.style.display = 'none';
+    timerBar.style.display = 'none';
+    header.style.display = 'none';
+    main.classList.add('flex-column');
 
     const finalScore = document.createElement('h2');
     const scoreShow = document.createElement('h1');
+
+    const restartButton = document.createElement('button');
+
+    restartButton.classList.add('restart-btn');
+
+    restartButton.innerText = 'Restart';
+
+    restartButton.addEventListener('click', restartGame);
 
     scoreShow.innerText = score;
 
@@ -148,13 +174,12 @@ async function renderQuestion() {
 
     main.append(finalScore);
     main.append(scoreShow);
+    main.append(restartButton);
   }
 }
 
 //  Chequea que la respuesta sea correcta
 function checkAnswer(clicked, correct) {
-  console.log(clicked, correct);
-
   //  Si aun no se ha clickeado, agregar 10pts y dar feedback
   //  El calculo del puntaje depende del modo seleccionado
   if (clicked.target.textContent === correct && answered === false) {
@@ -169,7 +194,6 @@ function checkAnswer(clicked, correct) {
     clicked.target.classList.add('wrong');
   }
 
-  console.log(score);
   nextButton.classList.add('next-button-show');
   answered = true;
 
@@ -177,8 +201,6 @@ function checkAnswer(clicked, correct) {
   scoreDOM.textContent = `Score: ${score}`;
   //  Escondemos el boton de next
   nextButton.classList.remove('hide');
-
-  console.log(nextButton);
 }
 
 renderQuestion();
