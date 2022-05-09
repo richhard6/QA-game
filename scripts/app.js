@@ -21,21 +21,21 @@ let totalTime = 30;
 
 // --------------------------- QuerySelector ------------------------------------//
 
-const questionDOM = document.querySelector('.question');
+const question = document.querySelector('.question');
 
-const sectionDOM = document.querySelector('section');
+const main = document.querySelector('main');
 
-const answersDOM = document.querySelector('.answers-container');
+const answersContainer = document.querySelector('.answers-container');
 
 const scoreDOM = document.querySelector('.score');
 
 const nextButton = document.querySelector('.next-button');
 
-const questionNumberDOM = document.querySelector('.question-number');
+const questionNumber = document.querySelector('.question-number');
 
 const timerBar = document.querySelector('#timer');
 
-const QAContainerDOM = document.querySelector('.question-answer-container');
+const QAContainer = document.querySelector('.question-answer-container');
 
 // ----------------------------------------------------------------------//
 
@@ -45,7 +45,7 @@ const nextQuestion = () => {
   questionCounter++;
   nextButton.classList.add('hide');
 
-  QAContainerDOM.classList.remove('question-answer-container');
+  QAContainer.classList.remove('question-answer-container');
   nextButton.classList.remove('next-button-show');
 
   answered = false;
@@ -88,8 +88,8 @@ async function getData() {
 
 //  Borra el contenido de la pregunta y respuesta
 const clearScreen = () => {
-  questionDOM.textContent = '';
-  answersDOM.innerHTML = '';
+  question.textContent = '';
+  answersContainer.innerHTML = '';
 };
 
 //  Renderiza pregunta
@@ -101,8 +101,8 @@ async function renderQuestion() {
     timerBar.classList.add('hide');
   }
 
-  QAContainerDOM.classList.add('question-answer-container');
-  questionNumberDOM.textContent = `Question ${questionCounter + 1} of  ${
+  QAContainer.classList.add('question-answer-container');
+  questionNumber.textContent = `Question ${questionCounter + 1} of  ${
     data.length
   }`;
 
@@ -114,7 +114,7 @@ async function renderQuestion() {
 
     //  Limpiamos pantalla y mostramos la pregunta
     clearScreen();
-    questionDOM.textContent = currentQuestion.question;
+    question.textContent = currentQuestion.question;
 
     //  Recorremos el array de respuestas
     for (let i = 0; i < currentQuestion.answers.length; i++) {
@@ -124,7 +124,7 @@ async function renderQuestion() {
 
       button.classList.add('btn');
 
-      answersDOM.append(button);
+      answersContainer.append(button);
 
       button.addEventListener('click', (e) =>
         checkAnswer(e, currentQuestion.correct)
@@ -132,10 +132,10 @@ async function renderQuestion() {
     }
   } else {
     //  En caso contrario, borrar odo y mostrar la pantalla final
-    sectionDOM.innerHTML = '';
+    main.innerHTML = '';
 
-    sectionDOM.style.display = 'flex';
-    sectionDOM.style.flexDirection = 'column';
+    main.style.display = 'flex';
+    main.style.flexDirection = 'column';
 
     const finalScore = document.createElement('h2');
     const scoreShow = document.createElement('h1');
@@ -146,8 +146,8 @@ async function renderQuestion() {
     scoreShow.classList.add('final-score');
     finalScore.classList.add('score-text');
 
-    sectionDOM.append(finalScore);
-    sectionDOM.append(scoreShow);
+    main.append(finalScore);
+    main.append(scoreShow);
   }
 }
 

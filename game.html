@@ -10,28 +10,22 @@
 
   <body>
     <main>
-      <section>
+      <div id="top">
+        <h3 class="score">Score: 0</h3>
 
-        <div id="top">
-          <h3 class="score">Score: 0</h3>
+        <p class="question-number"></p>
+      </div>
 
-          <p class="question-number"></p>
-        </div>
-        
-        <progress id="timer" value="30" max="30"></progress>
+      <progress id="timer" value="30" max="30"></progress>
 
-        <div class="question-answer-container">
+      <div class="question-answer-container">
+        <h2 class="question"></h2>
+        <div class="answers-container"></div>
+      </div>
 
-          <h2 class="question"></h2>
-          <div class="answers-container"></div>
-
-        </div>
-
-        <div class="next-button-container">
-          <button class="next-button hide">Next</button>
-        </div>
-
-      </section>
+      <div class="next-button-container">
+        <button class="next-button hide">Next</button>
+      </div>
     </main>
 
     <script src="./scripts/app.js"></script>
