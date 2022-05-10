@@ -129,7 +129,8 @@ h2 {
   justify-content: center;
 }
 
-.next-button {
+.next-button, 
+.restart-btn {
   border: none;
   margin-top: 2rem;
   padding: 0.5rem 0.9rem;
