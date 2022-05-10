@@ -14,12 +14,24 @@ h2 {
 
 main {
   display: flex;
-  height: 100vh;
+  height: 95vh;
   background-color: #2e182f;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 3rem;
+}
+
+footer {
+  background-color: black;
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  height: 5vh;
 }
 
 a {
