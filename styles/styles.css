@@ -124,19 +124,28 @@ h2 {
 
 /* ------------------------ Boton 'Next' -------------- */
 
-.next-button-container {
+
+.next-button-container,
+.game-over-container {
   display: flex;
   justify-content: center;
+  gap: 1rem;
 }
 
 .next-button, 
-.restart-btn {
+.restart-btn,
+.home-button {
   border: none;
   margin-top: 2rem;
   padding: 0.5rem 0.9rem;
   cursor: pointer;
   border-radius: 7px;
   font-size: 2rem;
+}
+
+.home-button > a {
+  text-decoration: none;
+  color: black;
 }
 
 .next-button-show {

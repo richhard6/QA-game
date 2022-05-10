@@ -55,6 +55,7 @@ const nextQuestion = () => {
   renderQuestion();
 };
 
+// Reincia el juego
 const restartGame = () => {
   score = 0;
   questionCounter = 0;
@@ -66,13 +67,15 @@ const restartGame = () => {
 
   document.querySelector('.final-score').remove();
   document.querySelector('.score-text').remove();
-  document.querySelector('.restart-btn').remove();
+  document.querySelector('.game-over-container').remove();
 
   renderQuestion();
 };
 
 //  Temporizador
-const questionTimer = () => {
+const questionTimer = async () => {
+
+  const data = await getData();
   //  Solo se activa si el modo temporizador esta activado
   if (timerMode === true) {
     //  Cada vez que se inicia el temporizador, se reinician los valroes
@@ -87,7 +90,7 @@ const questionTimer = () => {
         clearInterval(interval);
         answered = true;
         nextButton.classList.remove('hide');
-      } else if (answered === true) {
+      } else if (answered === true || data.length === questionCounter) {
         clearInterval(interval);
       }
     }, 1000);
@@ -159,13 +162,25 @@ async function renderQuestion() {
     const finalScore = document.createElement('h2');
     const scoreShow = document.createElement('h1');
 
+    // Crea el menu de Game Over
+    const gameOverContainer = document.createElement('div');
     const restartButton = document.createElement('button');
+    const homeButton = document.createElement('button');
+    const homeAncor = document.createElement('a');
+    homeAncor.textContent = 'Home';
+    homeAncor.setAttribute('href', './index.html');
+    homeButton.append(homeAncor);
+    homeButton.classList.add('home-button');
+    gameOverContainer.append(restartButton);
+    gameOverContainer.append(homeButton);
+    gameOverContainer.classList.add('game-over-container');
+
 
     restartButton.classList.add('restart-btn');
 
     restartButton.innerText = 'Restart';
 
-    //se añade el evento click con la funcion restartGame al boton previamente creado
+    //  Se añade el evento click con la funcion restartGame al boton previamente creado
     restartButton.addEventListener('click', restartGame);
 
     scoreShow.innerText = score;
@@ -176,7 +191,7 @@ async function renderQuestion() {
 
     main.append(finalScore);
     main.append(scoreShow);
-    main.append(restartButton);
+    main.append(gameOverContainer);
   }
 }
 
