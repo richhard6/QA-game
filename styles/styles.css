@@ -39,11 +39,6 @@ main {
   justify-content: center;
 }
 
-/* section {
-  height: 100vh;
-
-} */
-
 .flex-column {
   display: flex;
   flex-direction: column;
@@ -51,6 +46,10 @@ main {
 
 h2 {
   text-align: center;
+}
+
+.correct-answers {
+  color: white;
 }
 
 .question {

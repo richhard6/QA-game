@@ -13,6 +13,9 @@ let score = 0;
 //  Aqui se almacena la puntuacion
 //  Cada respuesta correcta son 10 pts
 
+let correctAnswers = 0;
+//  Cuenta las respuestas correctas
+
 let answered = false;
 //  falso = no ha contestado, true contestado.
 
@@ -58,6 +61,7 @@ const nextQuestion = () => {
 // Reincia el juego
 const restartGame = () => {
   score = 0;
+  correctAnswers = 0;
   questionCounter = 0;
   answered = false;
   QAContainer.style.display = 'flex';
@@ -68,6 +72,7 @@ const restartGame = () => {
   document.querySelector('.final-score').remove();
   document.querySelector('.score-text').remove();
   document.querySelector('.game-over-container').remove();
+  document.querySelector('.correct-answers').remove();
 
   renderQuestion();
 };
@@ -162,6 +167,10 @@ async function renderQuestion() {
     const finalScore = document.createElement('h2');
     const scoreShow = document.createElement('h1');
 
+    const correctShow = document.createElement('h3');
+    correctShow.classList.add('correct-answers');
+    correctShow.textContent = `${correctAnswers} correct answers out of ${data.length}`;
+
     // Crea el menu de Game Over
     const gameOverContainer = document.createElement('div');
     const restartButton = document.createElement('button');
@@ -174,7 +183,6 @@ async function renderQuestion() {
     gameOverContainer.append(restartButton);
     gameOverContainer.append(homeButton);
     gameOverContainer.classList.add('game-over-container');
-
 
     restartButton.classList.add('restart-btn');
 
@@ -191,6 +199,7 @@ async function renderQuestion() {
 
     main.append(finalScore);
     main.append(scoreShow);
+    main.append(correctShow);
     main.append(gameOverContainer);
   }
 }
@@ -202,9 +211,12 @@ function checkAnswer(clicked, correct) {
   if (clicked.target.textContent === correct && answered === false) {
     if (timerMode) {
       score += 5 * totalTime;
+      correctAnswers++;
       clicked.target.classList.add('correct');
+
     } else {
       score += 10;
+      correctAnswers++;
       clicked.target.classList.add('correct');
     }
   } else if (answered === false) {
